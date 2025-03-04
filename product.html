@@ -185,12 +185,116 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* Mobile menu styles */
+        .mobile-menu-button {
+            display: none;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-button {
+                display: block;
+            }
+
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                z-index: 100;
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            nav ul li {
+                width: 100%;
+                text-align: center;
+                padding: 0.5rem 0;
+            }
+
+            .product-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                margin: 1rem auto;
+            }
+
+            .product-gallery {
+                order: -1;
+            }
+
+            .thumbnail-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 0.5rem;
+            }
+
+            .product-info {
+                padding: 0.5rem;
+            }
+
+            .product-title {
+                font-size: 1.5rem;
+            }
+
+            .size-options {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .size-button {
+                min-width: 60px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 0.5rem 1rem;
+            }
+
+            .product-title {
+                font-size: 1.25rem;
+            }
+
+            .product-price {
+                font-size: 1.25rem;
+            }
+
+            .thumbnail-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .size-options {
+                gap: 0.25rem;
+            }
+
+            .size-button {
+                padding: 0.5rem;
+                min-width: 50px;
+            }
+
+            .add-to-cart,
+            .buy-now {
+                padding: 0.75rem 1.5rem;
+            }
+        }
     </style>
 </head>
 <body>
     <header>
         <div class="logo">iWear</div>
         <nav>
+            <button class="mobile-menu-button">☰</button>
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="#">Shop</a></li>
@@ -244,5 +348,34 @@
             </div>
         </div>
     </main>
+
+    <script>
+        // Mobile menu functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuButton = document.querySelector('.mobile-menu-button');
+            const navMenu = document.querySelector('nav ul');
+            
+            menuButton.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!event.target.closest('nav') && navMenu.classList.contains('active')) {
+                    navMenu.classList.remove('active');
+                }
+            });
+
+            // Image gallery functionality
+            const mainImage = document.querySelector('.main-image');
+            const thumbnails = document.querySelectorAll('.thumbnail');
+
+            thumbnails.forEach(thumbnail => {
+                thumbnail.addEventListener('click', function() {
+                    mainImage.src = this.src.replace('150x150', '600x600');
+                });
+            });
+        });
+    </script>
 </body>
 </html> 

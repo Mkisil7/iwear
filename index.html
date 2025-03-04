@@ -291,17 +291,85 @@
       text-decoration: underline;
     }
 
-    @media (max-width: 768px) {
-      .hero-content h1 {
-        font-size: 2.5rem;
-      }
+    /* Mobile menu styles */
+    .mobile-menu-button {
+      display: none;
+      font-size: 1.5rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
 
-      .newsletter-form {
-        flex-direction: column;
+    @media (max-width: 768px) {
+      .mobile-menu-button {
+        display: block;
       }
 
       nav ul {
-        gap: 1rem;
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        flex-direction: column;
+        padding: 1rem;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      }
+
+      nav ul.active {
+        display: flex;
+      }
+
+      nav ul li {
+        width: 100%;
+        text-align: center;
+        padding: 0.5rem 0;
+      }
+
+      .hero-content h1 {
+        font-size: 2rem;
+        padding: 0 1rem;
+      }
+
+      .hero-content p {
+        font-size: 1rem;
+        padding: 0 1rem;
+      }
+
+      .product-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
+
+      .category-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .announcement-bar {
+        font-size: 0.8rem;
+        padding: 0.3rem;
+      }
+
+      header {
+        padding: 0.5rem 1rem;
+      }
+
+      .featured-products,
+      .categories,
+      .newsletter {
+        padding: 2rem 1rem;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
       }
     }
   </style>
@@ -314,6 +382,7 @@
   <header>
     <div class="logo">iWear</div>
     <nav>
+      <button class="mobile-menu-button">☰</button>
       <ul>
         <li><a href="#new-arrivals">New Arrivals</a></li>
         <li><a href="#shop">Shop</a></li>
@@ -423,5 +492,24 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    // Mobile menu functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuButton = document.querySelector('.mobile-menu-button');
+      const navMenu = document.querySelector('nav ul');
+      
+      menuButton.addEventListener('click', function() {
+        navMenu.classList.toggle('active');
+      });
+
+      // Close menu when clicking outside
+      document.addEventListener('click', function(event) {
+        if (!event.target.closest('nav') && navMenu.classList.contains('active')) {
+          navMenu.classList.remove('active');
+        }
+      });
+    });
+  </script>
 </body>
 </html>
